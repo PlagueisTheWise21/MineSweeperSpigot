@@ -7,8 +7,9 @@
 - Ability to open game from other plugins (using commands)
 
 ## Commands
-- /minesweeper <mine amount>
-- <mine amount> must be within 1 and 53
+- /minesweeper "<mine amount>" 
+- "<mine amount>" must be within 1 and 53
+- if no mine amount specificed, default bomb value from config.yml will be used
 
 
 ## Default Configuration
