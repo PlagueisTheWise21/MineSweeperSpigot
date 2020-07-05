@@ -28,11 +28,6 @@ public class OpenUI extends MineSweeper implements CommandExecutor{
 
 		if(sender instanceof Player) {
 			Player player = (Player) sender;
-			
-			if (!player.hasPermission("minesweeper.use")) {
-				player.sendMessage(ChatColor.DARK_RED + "You do not have permission to do this!");
-				return false;
-			}
 
 			if(args.length == 1) {
 				if (!player.hasPermission("minesweeper.use.amount")) {
@@ -72,7 +67,14 @@ public class OpenUI extends MineSweeper implements CommandExecutor{
 	}
 	
 	@SuppressWarnings({ "deprecation", "unused" })
-	private void startGame(Player player, int bombs) {
+	public void startGame(Player player, int bombs) {
+		
+		// Permission check
+		if (!player.hasPermission("minesweeper.use")) {
+			player.sendMessage(ChatColor.DARK_RED + "You do not have permission to do this!");
+			return;
+		}
+		
 		// Check buy in available
 		if(plugin.getConfig().getBoolean("buy-in.enable")) {
 			

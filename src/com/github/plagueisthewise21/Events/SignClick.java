@@ -7,7 +7,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import com.github.plagueisthewise21.Source;
+import com.github.plagueisthewise21.Command.OpenUI;
+
 public class SignClick implements Listener {
+	
+	protected Source plugin;
+	public SignClick(Source plugin) {
+		this.plugin = plugin;
+	}
 	
 	@EventHandler
 	public void onSignClick(PlayerInteractEvent e) {
@@ -22,9 +30,11 @@ public class SignClick implements Listener {
 			return;
 		}
 		
-		Player p = e.getPlayer();
+		Player player = e.getPlayer();
 		
 		// Start game...
+		OpenUI game = new OpenUI(plugin);
+		game.startGame(player, plugin.getConfig().getInt("default-bombs"));
 	}
 
 }
