@@ -74,12 +74,12 @@ public class OpenUI extends MineSweeper implements CommandExecutor{
 	@SuppressWarnings({ "deprecation", "unused" })
 	private void startGame(Player player, int bombs) {
 		// Check buy in available
-		if(plugin.getConfig().getBoolean("buy-in")) {
+		if(plugin.getConfig().getBoolean("buy-in.enable")) {
 			
-			String buy_in_type = plugin.getConfig().getString("buy-in-type");
+			String buy_in_type = plugin.getConfig().getString("buy-in.type");
 			
 			if (buy_in_type.equalsIgnoreCase("items")) {
-			    List<String> list = plugin.getConfig().getStringList("cost-items");
+			    List<String> list = plugin.getConfig().getStringList("cost.items");
 			    
 				if(!this.hasInInv(player, list)) {
 					player.sendMessage(ChatColor.DARK_RED + "You do not have enough buy in");
@@ -121,19 +121,19 @@ public class OpenUI extends MineSweeper implements CommandExecutor{
 				}
 				
 				// Has amount on bank account?
-				if(!this.plugin.getEconomy().getEconomy().has(player, plugin.getConfig().getDouble("cost-vault"))) {
-					player.sendMessage(ChatColor.DARK_RED + "You do not have " + plugin.getConfig().getDouble("cost-vault") + " to buy in");
+				if(!this.plugin.getEconomy().getEconomy().has(player, plugin.getConfig().getDouble("cost.vault.amount"))) {
+					player.sendMessage(ChatColor.DARK_RED + "You do not have " + plugin.getConfig().getDouble("cost.vault.amount") + " " + plugin.getConfig().getString("cost.vault.currency") + " to buy in");
 					return;
 				}
 				
 				// Withdraw succesful?
-				EconomyResponse response = this.plugin.getEconomy().getEconomy().withdrawPlayer(player, plugin.getConfig().getDouble("cost-vault"));
+				EconomyResponse response = this.plugin.getEconomy().getEconomy().withdrawPlayer(player, plugin.getConfig().getDouble("cost.vault.amount"));
 				if (!response.transactionSuccess()) {
-					player.sendMessage(ChatColor.DARK_RED + "You do not have " + plugin.getConfig().getDouble("cost-vault") + " to buy in");
+					player.sendMessage(ChatColor.DARK_RED + "You do not have " + plugin.getConfig().getDouble("cost.vault.amount") + " to buy in");
 					return;
 				}
 			} else {
-				player.sendMessage(ChatColor.DARK_RED + "The configuration of this plugin is wrong or outdated! Please check 'buy-in-type' in config");
+				player.sendMessage(ChatColor.DARK_RED + "The configuration of this plugin is wrong or outdated! Please check 'buy-in.type' in config");
 			}
 		}
 		
