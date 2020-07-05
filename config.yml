@@ -1,0 +1,25 @@
+give-rewards: true
+
+# possible buy in types:
+# - items
+# - vault
+
+buy-in: true
+buy-in-type: vault
+
+# the default amount of bombs at the execution of "/minesweeper"
+
+default-bombs: 5
+
+#if 'give-rewards' are true, input what commands to execute when a player win a game
+#use %player% to reference the player name
+
+rewards:
+  - give %player% diamond
+  - give %player% emerald
+  
+#if 'buy-in' is true, input the item ID's of the items that the player can use to buy them in
+  
+cost-items:
+  - 265
+cost-vault: 35
