@@ -13,14 +13,25 @@
 
 ## Default Configuration
 ```
-give-rewards: true
-
-#if 'give-rewards' are true, input what commands to execute when a player win a game
-#use %player% to reference the player name
+# 
+# possible buy in types:
+# - items
+# - vault
 
 commands:
-  - give %player% diamond
-  - give %player% emerald
+- give %player% diamond
+- give %player% emerald
+give-rewards: true
+buy-in: true
+buy-in-type: vault
+default-bombs: 5
+rewards:
+- give %player% diamond
+- give %player% emerald
+cost-items:
+- 1
+cost-vault: 35
+
 ```
 
 For more information check: https://www.spigotmc.org/resources/minesweeper-1-15.80878/
