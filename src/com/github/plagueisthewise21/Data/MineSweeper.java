@@ -13,19 +13,60 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public abstract class MineSweeper{
+import com.github.plagueisthewise21.Nms.TitleUpdater;
 
-	protected ItemStack flag = customItem(new ItemStack(Material.SIGN), ChatColor.RED + "Mine Flagged");
+public abstract class MineSweeper{
+	
+	
+	
+	protected static ItemStack flag;
 	protected ItemStack mine = customItem(new ItemStack(Material.TNT), ChatColor.GOLD + "That's A Mine! " + ChatColor.DARK_RED + "BOOM!");
-	protected ItemStack unsearched = customItem(new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte)15), ChatColor.GRAY + "Unsearched");
+	protected static ItemStack unsearched;
 	
 	public static HashMap<UUID, int[][]> mineTemplates = new HashMap<UUID, int[][]>(); 
 	public static HashMap<UUID, Integer> minesLeft = new HashMap<UUID, Integer>();
 	
+	
+	@SuppressWarnings("deprecation")
+	public static void loadItems() {
+		
+		if((Integer.parseInt(TitleUpdater.version.substring(3,5)) < 14)) {
+			try {
+			Class<?> materialClass = getClass("Material");
+			Object enumSign = materialClass.getField("SIGN").get(null);
+			Object enumPane = materialClass.getField("STAINED_GLASS_PANE").get(null);
+			
+			flag = customItem(new ItemStack((Material) enumSign), ChatColor.RED + "Mine Flagged");
+			
+			unsearched = customItem(new ItemStack((Material) enumPane, 1, (byte) 15), ChatColor.GRAY + "Unsearched");
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else {
+			flag = customItem(new ItemStack(Material.OAK_SIGN), ChatColor.RED + "Mine Flagged");
+			unsearched = customItem(new ItemStack(Material.BLACK_STAINED_GLASS_PANE), ChatColor.GRAY + "Unsearched");
+		}
+		
+		
+		
+	}
+	
+	
+	public static Class<?> getClass(String name){
+		try {
+			return Class.forName("org.bukkit." + name);
+		} 
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	private static final int MINE_PRESENT = 9;
 	
 
-	public ItemStack customItem(ItemStack is, String name) {
+	public static ItemStack customItem(ItemStack is, String name) {
 		ItemMeta im = is.getItemMeta();
 		im.setDisplayName(name);
 		is.setItemMeta(im);		

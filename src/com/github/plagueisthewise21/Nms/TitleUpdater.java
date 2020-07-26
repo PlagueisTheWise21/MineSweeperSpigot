@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 public abstract class TitleUpdater {
 
-	private static String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+	public static String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
 
 	public static void update(Player p, String newTitle){
 		
@@ -27,12 +27,12 @@ public abstract class TitleUpdater {
 				Field activeContainerField = entityPlayerClass.getField("activeContainer");
 				Object activeContainerObject = activeContainerField.get(entityPlayerObject);
 
-				Class<?> containerClass = ReflectionUtils.getNMSClass("Container");
+				Class<?> containerClass = getNMSClass("Container");
 				Field windowIdField = containerClass.getField("windowId");
 				Object windowIdObject = windowIdField.get(activeContainerObject);
 
 				//Create ChatMessage Object Of New Title
-				Class<?> chatMessageClass = ReflectionUtils.getNMSClass("ChatMessage");
+				Class<?> chatMessageClass = getNMSClass("ChatMessage");
 				Constructor<?> chatMessageConstructor = chatMessageClass.getConstructor(String.class, Object[].class);
 				Object invTitleObject = chatMessageConstructor.newInstance(newTitle, new Object[] {});
 
@@ -63,12 +63,12 @@ public abstract class TitleUpdater {
 				Field activeContainerField = entityPlayerClass.getField("activeContainer");
 				Object activeContainerObject = activeContainerField.get(entityPlayerObject);
 
-				Class<?> containerClass = ReflectionUtils.getNMSClass("Container");
+				Class<?> containerClass = getNMSClass("Container");
 				Field windowIdField = containerClass.getField("windowId");
 				Object windowIdObject = windowIdField.get(activeContainerObject);
 
 				//Create ChatMessage Object Of New Title
-				Class<?> chatMessageClass = ReflectionUtils.getNMSClass("ChatMessage");
+				Class<?> chatMessageClass = getNMSClass("ChatMessage");
 				Constructor<?> chatMessageConstructor = chatMessageClass.getConstructor(String.class, Object[].class);
 				Object invTitleObject = chatMessageConstructor.newInstance(newTitle, new Object[] {});
 
@@ -111,7 +111,7 @@ public abstract class TitleUpdater {
 	}
 
 
-	private static Class<?> getNMSClass(String name){
+	public static Class<?> getNMSClass(String name){
 		try {
 			return Class.forName("net.minecraft.server." + version + "." + name);
 		} 
@@ -119,7 +119,6 @@ public abstract class TitleUpdater {
 			e.printStackTrace();
 			return null;
 		}
-
 	}
 
 

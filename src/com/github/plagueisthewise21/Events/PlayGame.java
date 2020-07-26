@@ -41,7 +41,6 @@ public class PlayGame extends MineSweeper implements Listener{
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onClick(InventoryClickEvent e) {
 		if(e.getView().getTitle().contains("Mines Remaining: ")) {

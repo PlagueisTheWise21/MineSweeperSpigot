@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.plagueisthewise21.Command.OpenUI;
 import com.github.plagueisthewise21.Data.EconomyHandler;
+import com.github.plagueisthewise21.Data.MineSweeper;
 import com.github.plagueisthewise21.Events.PlayGame;
 import com.github.plagueisthewise21.Events.SignClick;
 import com.github.plagueisthewise21.Events.SignCreate;
@@ -28,6 +29,8 @@ public class Source extends JavaPlugin implements Listener{
 		Bukkit.getPluginManager().registerEvents(new SignCreate(this), this);
 		Bukkit.getPluginManager().registerEvents(new SignClick(this), this);
 		Bukkit.getPluginManager().registerEvents(this, this);
+		
+		MineSweeper.loadItems();
 	}
 	
 	public void onDisable() {
