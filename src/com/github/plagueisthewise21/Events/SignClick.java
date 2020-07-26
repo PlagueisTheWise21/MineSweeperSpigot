@@ -22,11 +22,11 @@ public class SignClick implements Listener {
 		if (!(e.getClickedBlock().getState() instanceof Sign)) {
 			return;
 		}
-
 		Sign sign = (Sign) e.getClickedBlock().getState();
-		String line_0 = ChatColor.RESET + sign.getLine(0);
+		String line_0 = sign.getLine(0);
 		
-		if (!line_0.equalsIgnoreCase("[minesweeper]")) {
+		if (!line_0.equalsIgnoreCase(ChatColor.GRAY + "[" + ChatColor.AQUA + "MineSweeper" + ChatColor.GRAY + "]")) {
+			System.out.println("HELLO");
 			return;
 		}
 		
