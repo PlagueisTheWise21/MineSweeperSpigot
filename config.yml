@@ -3,7 +3,7 @@
 # - vault
 
 buy-in:
-  enable: true
+  enable: false
   type: vault
 
 # the default amount of bombs at the execution of "/minesweeper"

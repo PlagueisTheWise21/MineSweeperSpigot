@@ -6,7 +6,6 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,14 +16,9 @@ import org.bukkit.inventory.ItemStack;
 
 import com.github.plagueisthewise21.Source;
 import com.github.plagueisthewise21.Data.MineSweeper;
+import com.github.plagueisthewise21.Nms.TitleUpdater;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-
-import net.minecraft.server.v1_15_R1.ChatMessage;
-import net.minecraft.server.v1_15_R1.Containers;
-import net.minecraft.server.v1_15_R1.EntityPlayer;
-import net.minecraft.server.v1_15_R1.IChatBaseComponent;
-import net.minecraft.server.v1_15_R1.PacketPlayOutOpenWindow;
 
 public class PlayGame extends MineSweeper implements Listener{
 	
@@ -96,7 +90,7 @@ public class PlayGame extends MineSweeper implements Listener{
 								}
 							}
 							//set "game over" as inv title
-							update(player, ChatColor.DARK_RED + "Game Over");
+							TitleUpdater.update(player, ChatColor.DARK_RED + "Game Over");
 						}
 						break;
 					case 0:
@@ -106,7 +100,7 @@ public class PlayGame extends MineSweeper implements Listener{
 						checked.clear();
 						//check to see if game is won
 						if(checkIfWin(gameUI, totalMines)) {
-							update(player, ChatColor.DARK_GREEN + "You Win!");
+							TitleUpdater.update(player, ChatColor.DARK_GREEN + "You Win!");
 							//show all cells
 							for(int i = 0; i < template.length; i++) {
 								for(int j = 0; j < template[0].length; j++) {
@@ -136,7 +130,8 @@ public class PlayGame extends MineSweeper implements Listener{
 						gameUI.setItem(slot, customItem(new ItemStack(Material.CYAN_SHULKER_BOX, valueClicked), " "));
 						//check to see if game is won
 						if(checkIfWin(gameUI, totalMines)) {
-							update(player, ChatColor.DARK_GREEN + "You Win!");
+							
+							TitleUpdater.update(player, ChatColor.DARK_GREEN + "You Win!");
 							//Show all cells
 							for(int i = 0; i < template.length; i++) {
 								for(int j = 0; j < template[0].length; j++) {
@@ -171,13 +166,13 @@ public class PlayGame extends MineSweeper implements Listener{
 						gameUI.setItem(slot, unsearched);
 						int x = minesLeft.get(id);
 						minesLeft.put(id, x + 1);
-						update(player, "Mines Remaining: " + minesLeft.get(id));
+						TitleUpdater.update(player, "Mines Remaining: " + minesLeft.get(id));
 					}else
 						if(e.getCurrentItem().equals(unsearched)) {
 							gameUI.setItem(slot, flag);
 							int x = minesLeft.get(id);
 							minesLeft.put(id, x - 1);
-							update(player, "Mines Remaining: " + minesLeft.get(id));
+							TitleUpdater.update(player, "Mines Remaining: " + minesLeft.get(id));
 						}
 				}
 			}
@@ -248,29 +243,6 @@ public class PlayGame extends MineSweeper implements Listener{
 			String s = command.replaceAll("%player%", playerName);
 			Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), s);
 		}
-	}
-	
-	public void update(Player p, String title){
-		EntityPlayer ep = ((CraftPlayer)p).getHandle();
-		IChatBaseComponent invTitle = new ChatMessage(title);
-		PacketPlayOutOpenWindow packet = new PacketPlayOutOpenWindow(ep.activeContainer.windowId, Containers.GENERIC_9X6, invTitle);
-		ep.playerConnection.sendPacket(packet);
-		
-//		try {
-//			Object windowId = getNMSClass("Container.windowId").getField("windowId").get(int.class);
-//			Object container = getNMSClass("Containers").getField("GENERIC_9X6").get(null);
-//			Object sTitle = getNMSClass("ChatMessage").getMethod("ChatMessage", String.class).invoke(true, title);
-//			
-//			Constructor<?> windowTitle = getNMSClass("PacketPlayOutOpenWindow").getConstructor(getNMSClass("Container.windowId"), getNMSClass("Containers"), getNMSClass("ChatMessage"));
-//			Object packet = windowTitle.newInstance(windowId, container, sTitle);
-//			sendPacket(p, packet);
-//		} 
-//		catch (Exception e) {
-//			e.printStackTrace();
-//		}
-	
-		
-		ep.updateInventory(ep.activeContainer);
 	}
 	
 //	public void sendPacket(Player player, Object packet) {

@@ -21,4 +21,6 @@
 			<url>https://jitpack.io</url>
 		</repository>
 	</repositories>
+  	<dependencies>
+  	</dependencies>
 </project>
