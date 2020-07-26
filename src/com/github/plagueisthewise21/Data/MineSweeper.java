@@ -15,11 +15,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public abstract class MineSweeper{
 
-	protected ItemStack flag = customItem(new ItemStack(Material.OAK_SIGN), ChatColor.RED + "Mine Flagged");
+	protected ItemStack flag = customItem(new ItemStack(Material.SIGN), ChatColor.RED + "Mine Flagged");
 	protected ItemStack mine = customItem(new ItemStack(Material.TNT), ChatColor.GOLD + "That's A Mine! " + ChatColor.DARK_RED + "BOOM!");
-	protected ItemStack unsearched = customItem(new ItemStack(Material.BLACK_STAINED_GLASS_PANE), ChatColor.GRAY + "Unsearched");
+	protected ItemStack unsearched = customItem(new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte)15), ChatColor.GRAY + "Unsearched");
 	
-	public static HashMap<UUID, int[][]> mineTemplates = new HashMap<UUID, int[][]>();
+	public static HashMap<UUID, int[][]> mineTemplates = new HashMap<UUID, int[][]>(); 
 	public static HashMap<UUID, Integer> minesLeft = new HashMap<UUID, Integer>();
 	
 	private static final int MINE_PRESENT = 9;
